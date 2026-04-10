@@ -1,55 +1,49 @@
-# Assessment 2 — Bug Resolution Multi-Agent System
-### Purple Merit Technologies — AI/ML Engineer Assessment
+# ── README.md ──────────────────────────────────────────────────
 
-An automated multi-agent system that ingests a bug report and related logs,
-reproduces the issue by generating a minimal reproducible script, and outputs
-a root-cause hypothesis plus a patch plan.
+# War Room Multi-Agent System
+### Purple Merit Technologies — AI/ML Engineer Assessment 1
+
+A multi-agent system that simulates a cross-functional **product launch war room**,
+analyses a mock dashboard (metrics + user feedback), and produces a structured
+launch decision: **PROCEED / PAUSE / ROLL_BACK** with a full action plan.
 
 ---
 
 ## System Architecture
 
 ```
-Inputs (mini_repo/)
-  └── bug_report.md + logs.txt + app.py
+Inputs (data/)
+  └── metrics.json + feedback.json + release_notes.md
           │
           ▼
-  Orchestrator (main.py)
+  Orchestrator (orchestrator.py)
           │
   ┌───────┼──────────────────────────────────────┐
-  │       │              │           │            │
-  ▼       ▼              ▼           ▼            ▼
-Triage  Log Analyst  Reproduction  Fix Planner  Reviewer
-Agent   Agent        Agent         Agent        /Critic
-  │       │              │           │            │
-  └───────┴──────────────┴───────────┴────────────┘
+  │       │                                      │
+  ▼       ▼          ▼           ▼               ▼
+Data    Product   Marketing    SRE/          Risk/Critic
+Analyst Manager   /Comms      Reliability    Agent
+Agent   Agent     Agent        Agent (Bonus)
+  │       │          │           │               │
+  └───────┴──────────┴───────────┴───────────────┘
                     │
                     ▼
-          resolution_output.json
-          repro.py (runnable artifact)
+          Orchestrator Synthesis
+                    │
+                    ▼
+          output/final_decision.json
 ```
-
----
 
 ## Agent Responsibilities
 
-| Agent | Role |
-|---|---|
-| Triage Agent | Extracts symptoms, expected vs actual behavior, prioritizes hypotheses |
-| Log Analyst Agent | Searches logs for stack traces, error signatures, anomalies |
-| Reproduction Agent | Generates and runs minimal reproduction script (repro.py) |
-| Fix Planner Agent | Proposes root-cause hypothesis and patch plan |
-| Reviewer/Critic Agent | Challenges assumptions, verifies fix plan, suggests edge cases |
-
----
-
-## Input Mode
-**Option A — Mini Repo** (as recommended by assessment)
-
-The `mini_repo/` folder contains:
-- `app.py` — Flask app with an intentionally introduced bug (KeyError on missing 'price' field)
-- `bug_report.md` — Full bug report with expected vs actual behavior
-- `logs.txt` — Application logs with stack traces and red herring lines
+| Agent | Role | Tools Used |
+|---|---|---|
+| Data Analyst | Quantitative metrics, trends, anomalies | aggregate_metrics, detect_anomalies, compare_to_baseline |
+| Product Manager | Success criteria, go/no-go framing | (reads analyst output) |
+| Marketing/Comms | Sentiment, perception, comms plan | summarize_sentiment, extract_themes |
+| SRE/Reliability | SLA compliance, infrastructure risk | detect_anomalies |
+| Risk/Critic | Challenge assumptions, risk register | (reads all outputs) |
+| Orchestrator | Final synthesis and decision | (synthesizes all) |
 
 ---
 
@@ -57,15 +51,15 @@ The `mini_repo/` folder contains:
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/NithinKumar194/PurpleMerit-AI-ML-Assessment/tree/main/Assessment-2/ingests_a_bug_report
-cd PurpleMerit-AI-ML-Assessment/Assessment-2/ingests_a_bug_report
+git clone https://github.com/NithinKumar194/PurpleMerit-AI-ML-Assessment/tree/main/Assessment-1/war-room-agent
+cd war-room-agent
 ```
 
-### 2. Create virtual environment
+### 2. Create and activate virtual environment
 ```bash
 python -m venv venv
-venv\Scripts\activate        # Windows
-source venv/bin/activate     # Linux/Mac
+source venv/bin/activate        # Linux/macOS
+venv\Scripts\activate           # Windows
 ```
 
 ### 3. Install dependencies
@@ -73,10 +67,15 @@ source venv/bin/activate     # Linux/Mac
 pip install -r requirements.txt
 ```
 
-### 4. Set environment variable
-Create a `.env` file in this folder:
+### 4. Set environment variables
+```bash
+cp .env.example .env
+# Edit .env and add your Anthropic API key
 ```
-OPENAI_API_KEY=sk-your-openai-key-here
+
+### 5. Verify your .env file contains:
+```
+ANTHROPIC_API_KEY=sk-ant-your-key-here
 ```
 
 ---
@@ -87,20 +86,12 @@ OPENAI_API_KEY=sk-your-openai-key-here
 python main.py
 ```
 
----
-
-## Example Output
-
-```
-Loading inputs (bug report, logs, codebase)...
-Running Triage Agent...
-Running Log Analyst Agent...
-Running Reproduction Agent...
-Executing repro.py...
-Running Fix Planner Agent...
-Running Reviewer Agent...
-resolution_output.json written.
-```
+That's it. The system will:
+1. Load all mock data from `data/`
+2. Run all 5 agents in sequence
+3. Synthesize the final decision
+4. Print a summary to console
+5. Save full JSON to `output/final_decision.json`
 
 ---
 
@@ -108,50 +99,91 @@ resolution_output.json written.
 
 | Variable | Description | Required |
 |---|---|---|
-| `OPENAI_API_KEY` | Your OpenAI API key | YES |
+| `OPENAI_API_KEY` | Your OpenAi API key | YES |
 
 ---
 
-## Output Files Generated
+## Output Files
 
 | File | Description |
 |---|---|
-| `repro.py` | Minimal runnable script that reproduces the bug consistently |
-| `resolution_output.json` | Full structured output — root cause, patch plan, validation |
+| `output/final_decision.json` | Canonical final output (overwritten each run) |
+| `output/final_decision_TIMESTAMP.json` | Timestamped copy per run |
+| `logs/run_trace_TIMESTAMP.log` | Full agent trace with tool calls |
 
 ---
 
-## Structured Output (resolution_output.json) Contains
+## Trace Logs — How to Read Them
 
-- Bug summary (symptoms, scope, severity)
-- Evidence (log lines, stack trace excerpts)
-- Repro steps + repro artifact path
-- Root-cause hypothesis (with confidence score)
-- Patch plan (files impacted, approach, risks)
-- Validation plan (tests to add, regression checks)
-- Open questions / missing info
+Logs are in `logs/run_trace_TIMESTAMP.log`
 
----
-
-## Trace Logs
-
-All agent decisions and tool calls are printed to console during execution.
-Each agent step is clearly labeled:
+Each line follows this format:
 ```
-[TRIAGE AGENT] Starting...
-[LOG ANALYST AGENT] Searching logs...
-[REPRODUCTION AGENT] Generating repro script...
-[TOOL] Executing repro.py via subprocess...
-[FIX PLANNER AGENT] Proposing patch...
-[REVIEWER AGENT] Critiquing plan...
+TIMESTAMP | war_room.MODULE | MESSAGE
+```
+
+Key log patterns:
+- `[ORCHESTRATOR] → Dispatching:` — agent being activated
+- `[AGENT: Name] → Invoking Tool:` — programmatic tool call happening
+- `[TOOL CALL] tool_name() invoked` — inside the tool
+- `[TOOL RESULT] tool_name()` — tool output summary
+- `[AGENT: Name] LLM response received` — LLM call completed
+- `[ORCHESTRATOR] ✓ FINAL DECISION:` — final output ready
+
+---
+
+## Final Output Structure (JSON)
+
+```json
+{
+  "decision": "ROLL_BACK | PAUSE | PROCEED",
+  "rationale": {
+    "summary": "...",
+    "key_drivers": [...],
+    "metric_references": [...],
+    "feedback_summary": "..."
+  },
+  "risk_register": [
+    {"risk": "...", "severity": "CRITICAL", "mitigation": "...", "owner": "..."}
+  ],
+  "action_plan": [
+    {"priority": 1, "action": "...", "owner": "...", "deadline": "...", "success_criteria": "..."}
+  ],
+  "communication_plan": {
+    "internal": {"audience": "...", "message": "...", "channel": "...", "timing": "..."},
+    "external": {"audience": "...", "message": "...", "channel": "...", "timing": "..."}
+  },
+  "confidence_score": {
+    "score": 87,
+    "rating": "HIGH",
+    "what_would_increase_confidence": [...]
+  },
+  "agent_votes": {...},
+  "metadata": {...}
+}
 ```
 
 ---
 
 ## Tech Stack
 
-- Python 3.10+
-- OpenAI GPT-4o
-- Flask (mini_repo app)
+- Python 3.11+
+- anthropic SDK (claude-opus-4-20250514)
 - python-dotenv
-- subprocess (tool execution)
+- No external orchestration framework — custom orchestrator
+
+---
+
+# ── requirements.txt ───────────────────────────────────────────
+
+# requirements.txt
+anthropic>=0.25.0
+python-dotenv>=1.0.0
+
+---
+
+# ── .env.example ───────────────────────────────────────────────
+
+# .env.example
+# Copy this file to .env and fill in your key
+OPEN_API_KEY=sk-ant-your-key-here
