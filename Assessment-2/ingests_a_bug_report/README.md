@@ -14,6 +14,13 @@ This repository implements an automated multi-agent system that analyzes a bug r
    ```env
    OPENAI_API_KEY=your_openai_api_key_here
    ```
+## Setup Instructions
+
+### 1. Clone the repository
+```bash
+git clone https://github.com/NithinKumar194/PurpleMerit-AI-ML-Assessment/tree/main/Assessment-2/ingests_a_bug_report
+cd ingests_a_bug_report
+```
 
 ## Running the Application
 
