@@ -1,0 +1,62 @@
+# ── API Keys & Secrets ────────────────────────────────────────
+.env
+.env.local
+.env.production
+*.env
+
+# ── Python Virtual Environments ───────────────────────────────
+venv/
+env/
+.venv/
+ct/
+Lib/
+Scripts/
+miniconda/
+anaconda/
+
+# ── Python Cache ──────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.pyc
+
+# ── Logs (optional — keep or ignore based on preference) ──────
+# logs/
+# *.log
+
+# ── Output files (optional — keep so evaluator sees sample) ───
+# output/
+
+# ── VS Code ───────────────────────────────────────────────────
+.vscode/
+*.code-workspace
+
+# ── Windows System Files ──────────────────────────────────────
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# ── Mac System Files (just in case) ──────────────────────────
+.DS_Store
+.AppleDouble
+
+# ── Jupyter Notebooks ─────────────────────────────────────────
+.ipynb_checkpoints/
+*.ipynb
+
+# ── Build / Distribution ──────────────────────────────────────
+dist/
+build/
+*.egg-info/
+*.egg
+wheels/
+
+# ── Testing ───────────────────────────────────────────────────
+.pytest_cache/
+.coverage
+htmlcov/
+
+# ── MyPy ──────────────────────────────────────────────────────
+.mypy_cache/

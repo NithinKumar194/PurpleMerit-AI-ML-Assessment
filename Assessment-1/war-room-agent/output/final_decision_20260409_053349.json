@@ -1,0 +1,131 @@
+{
+  "decision": "ROLL_BACK",
+  "rationale": {
+    "summary": "The current release has resulted in critical failures across multiple metrics, including crash rates and payment success, leading to significant user dissatisfaction and potential legal risks. A rollback is necessary to stabilize the platform and address these issues comprehensively.",
+    "key_drivers": [
+      "Critical SLA breaches in crash rate and payment success rate.",
+      "High user dissatisfaction indicated by increased churn and support tickets.",
+      "Potential legal risks due to double charges and payment failures.",
+      "Severe reputational damage from negative user sentiment."
+    ],
+    "metric_references": [
+      "crash_rate_pct: latest 4.8% — critical breach, baseline 0.5%",
+      "payment_success_rate: latest 0.79 — critical breach, baseline 0.97%"
+    ],
+    "feedback_summary": "User feedback is predominantly negative (60%), with major issues around payment failures and app crashes, leading to increased support tickets and churn."
+  },
+  "risk_register": [
+    {
+      "risk": "Continued high crash rate leading to user attrition and negative reviews.",
+      "severity": "CRITICAL",
+      "mitigation": "Immediate investigation and patch deployment to reduce crash rate.",
+      "owner": "Engineering Team"
+    },
+    {
+      "risk": "Payment failures causing revenue loss and potential legal issues.",
+      "severity": "CRITICAL",
+      "mitigation": "Fix payment gateway issues and audit transactions for double charges.",
+      "owner": "Finance and Engineering Teams"
+    },
+    {
+      "risk": "Increased support ticket volume overwhelming customer service.",
+      "severity": "HIGH",
+      "mitigation": "Scale support team temporarily and improve self-service options.",
+      "owner": "Customer Support Team"
+    },
+    {
+      "risk": "Negative user sentiment impacting brand reputation.",
+      "severity": "HIGH",
+      "mitigation": "Implement a comprehensive communication strategy and offer compensations.",
+      "owner": "Marketing/Comms Team"
+    },
+    {
+      "risk": "API latency affecting user experience and retention.",
+      "severity": "MEDIUM",
+      "mitigation": "Optimize backend processes and increase server capacity.",
+      "owner": "Engineering Team"
+    }
+  ],
+  "action_plan": [
+    {
+      "priority": 1,
+      "action": "Rollback to the previous stable version to restore system stability.",
+      "owner": "Engineering Team",
+      "deadline": "Within 24 hours",
+      "success_criteria": "System metrics return to baseline levels and no new critical issues arise."
+    },
+    {
+      "priority": 2,
+      "action": "Conduct a root cause analysis of the current issues, focusing on crash rates and payment failures.",
+      "owner": "Engineering and Product Teams",
+      "deadline": "Within 48 hours",
+      "success_criteria": "Identification of root causes and a detailed plan for addressing them."
+    },
+    {
+      "priority": 3,
+      "action": "Enhance customer support capacity to handle increased ticket volume.",
+      "owner": "Customer Support Team",
+      "deadline": "Within 12 hours",
+      "success_criteria": "Reduction in response times and backlog of support tickets."
+    },
+    {
+      "priority": 4,
+      "action": "Implement a communication strategy to inform users about the rollback and ongoing efforts to resolve issues.",
+      "owner": "Marketing/Comms Team",
+      "deadline": "Within 6 hours",
+      "success_criteria": "Positive shift in user sentiment and reduced negative feedback."
+    }
+  ],
+  "communication_plan": {
+    "internal": {
+      "audience": "All staff",
+      "message": "We are rolling back to the previous stable version due to critical issues. Teams are working on a root cause analysis and mitigation plan.",
+      "channel": "Email and Slack",
+      "timing": "Immediately"
+    },
+    "external": {
+      "audience": "All users",
+      "message": "We are addressing recent issues by rolling back to a stable version. We apologize for any inconvenience and are committed to resolving these issues swiftly.",
+      "channel": "Email and social media",
+      "timing": "Within 6 hours"
+    }
+  },
+  "confidence_score": {
+    "score": 40,
+    "rating": "LOW",
+    "what_would_increase_confidence": [
+      "Evidence of successful mitigation of crash rates and payment issues.",
+      "Clear plan for addressing root causes of the issues, not just symptoms.",
+      "Demonstrated improvement in key metrics post-intervention."
+    ]
+  },
+  "agent_votes": {
+    "data_analyst": "ROLL_BACK",
+    "product_manager": "ROLL_BACK",
+    "marketing_comms": "PAUSE",
+    "sre_reliability": "ROLL_BACK",
+    "risk_critic_veto": true
+  },
+  "metadata": {
+    "session_timestamp": "2026-04-09T05:34:27.837045+00:00",
+    "feature": "SmartPay v2.0 - Unified Checkout",
+    "launch_date": "2026-03-29",
+    "report_date": "2026-04-08",
+    "days_since_launch": 10,
+    "model_used": "gpt-4o",
+    "agents_consulted": [
+      "data_analyst",
+      "product_manager",
+      "marketing_comms",
+      "sre_reliability",
+      "risk_critic"
+    ],
+    "tools_invoked": [
+      "aggregate_metrics",
+      "detect_anomalies",
+      "compare_to_baseline",
+      "summarize_sentiment",
+      "extract_themes"
+    ]
+  }
+}

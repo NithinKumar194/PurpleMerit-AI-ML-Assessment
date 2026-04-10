@@ -1,0 +1,38 @@
+{
+  "feature": "SmartPay v2.0 - Unified Checkout",
+  "launch_date": "2026-03-29",
+  "report_date": "2026-04-08",
+  "baseline_pre_launch": {
+    "activation_rate": 0.65,
+    "dau_wau_ratio": 0.42,
+    "d1_retention": 0.45,
+    "d7_retention": 0.28,
+    "crash_rate_pct": 0.5,
+    "api_latency_p95_ms": 200,
+    "payment_success_rate": 0.97,
+    "support_ticket_volume": 40,
+    "funnel_completion_pct": 0.58,
+    "churn_rate_daily": 0.002
+  },
+  "time_series": {
+    "days": ["Day1","Day2","Day3","Day4","Day5","Day6","Day7","Day8","Day9","Day10"],
+    "activation_rate":       [0.61, 0.59, 0.57, 0.54, 0.52, 0.50, 0.49, 0.47, 0.45, 0.43],
+    "dau_wau_ratio":         [0.38, 0.39, 0.38, 0.36, 0.35, 0.34, 0.33, 0.31, 0.30, 0.29],
+    "d1_retention":          [0.42, 0.41, 0.40, 0.38, 0.37, 0.35, 0.34, 0.33, 0.31, 0.30],
+    "d7_retention":          [0.27, 0.26, 0.26, 0.25, 0.24, 0.23, 0.22, 0.21, 0.20, 0.19],
+    "crash_rate_pct":        [0.8,  0.9,  1.1,  1.4,  1.8,  2.3,  2.9,  3.5,  4.1,  4.8],
+    "api_latency_p95_ms":    [210,  215,  225,  240,  270,  310,  360,  420,  490,  580],
+    "payment_success_rate":  [0.97, 0.97, 0.96, 0.95, 0.93, 0.91, 0.88, 0.85, 0.82, 0.79],
+    "support_ticket_volume": [45,   48,   55,   70,   95,   130,  175,  220,  268,  310],
+    "funnel_completion_pct": [0.55, 0.54, 0.52, 0.50, 0.47, 0.44, 0.41, 0.38, 0.35, 0.32],
+    "churn_rate_daily":      [0.003,0.003,0.004,0.005,0.006,0.008,0.010,0.013,0.016,0.019]
+  },
+  "thresholds": {
+    "crash_rate_pct":       {"warning": 1.5, "critical": 3.0},
+    "api_latency_p95_ms":   {"warning": 300, "critical": 500},
+    "payment_success_rate": {"warning": 0.93,"critical": 0.85},
+    "support_ticket_volume":{"warning": 100, "critical": 200},
+    "funnel_completion_pct":{"warning": 0.45,"critical": 0.35},
+    "churn_rate_daily":     {"warning": 0.008,"critical": 0.015}
+  }
+}

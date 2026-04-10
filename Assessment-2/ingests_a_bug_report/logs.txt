@@ -1,0 +1,13 @@
+2023-11-01 12:00:01 [INFO] Starting cart processing task.
+2023-11-01 12:00:03 [DEBUG] Processing item: Laptop (price: 1500, discount: 0.2)
+2023-11-01 12:00:04 [DEBUG] Processing item: Promotional Mug (price: 15, discount: 1.0)
+2023-11-01 12:00:05 [ERROR] Uncaught exception processing cart:
+Traceback (most recent call last):
+  File "processor.py", line 42, in run_task
+    results = calculate_discounted_prices(cart)
+  File "/app/mini_repo/app.py", line 12, in calculate_discounted_prices
+    final_price = price / (1 - discount)
+ZeroDivisionError: float division by zero
+2023-11-01 12:00:05 [INFO] Task aborted.
+2023-11-01 12:05:00 [DEBUG] (Red Herring) - Database connection to replica temporarily lost, retrying...
+2023-11-01 12:05:02 [DEBUG] (Red Herring) - Database connection restored.
