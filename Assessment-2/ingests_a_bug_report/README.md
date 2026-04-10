@@ -147,6 +147,12 @@ Final structured report generated at resolution_output.json.
 - `agent_traces_and_feedback` — reviewer approval + critique
 
 ---
+## Trace Logs
+
+All agent decisions and tool calls are printed to the console during execution.
+
+### How to read the trace
+Each line is prefixed with the agent name:
 
 ## Trace Logs
 
