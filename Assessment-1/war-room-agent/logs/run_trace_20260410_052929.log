@@ -1,0 +1,98 @@
+10:59:29 | war_room.main                       | ✅ OPENAI_API_KEY loaded from environment
+10:59:32 | war_room.main                       | =================================================================
+10:59:32 | war_room.main                       |   WAR ROOM MULTI-AGENT SYSTEM — STARTING
+10:59:32 | war_room.main                       |   Log File: logs/run_trace_20260410_052929.log
+10:59:32 | war_room.main                       | =================================================================
+10:59:32 | war_room.main                       | [MAIN] Loading input data files...
+10:59:32 | war_room.main                       | [MAIN] ✅ Loaded metrics.json | Feature: SmartPay v2.0 - Unified Checkout | Days: 10
+10:59:32 | war_room.main                       | [MAIN] ✅ Loaded feedback.json | Entries: 30
+10:59:32 | war_room.main                       | [MAIN] ✅ Loaded release_notes.md | Size: 1761 chars
+10:59:34 | war_room.orchestrator               | =================================================================
+10:59:34 | war_room.orchestrator               |   WAR ROOM SESSION STARTED
+10:59:34 | war_room.orchestrator               |   Feature      : SmartPay v2.0 - Unified Checkout
+10:59:34 | war_room.orchestrator               |   Launch Date  : 2026-03-29
+10:59:34 | war_room.orchestrator               |   Report Date  : 2026-04-08
+10:59:34 | war_room.orchestrator               |   Days Tracked : 10
+10:59:34 | war_room.orchestrator               | =================================================================
+10:59:34 | war_room.orchestrator               | 
+[ORCHESTRATOR] ➤ Step 1: Dispatching Data Analyst Agent
+10:59:34 | war_room.agents.data_analyst        | [AGENT: Data Analyst Agent] ── Starting Analysis ──
+10:59:34 | war_room.agents.data_analyst        | [AGENT: Data Analyst Agent] → Invoking Tool: aggregate_metrics()
+10:59:34 | war_room.tools.metric               | [TOOL CALL] aggregate_metrics() invoked
+10:59:34 | war_room.tools.metric               | [TOOL RESULT] aggregate_metrics() → 10 metrics processed
+10:59:34 | war_room.agents.data_analyst        | [AGENT: Data Analyst Agent] → Invoking Tool: detect_anomalies()
+10:59:34 | war_room.tools.metric               | [TOOL CALL] detect_anomalies() invoked
+10:59:34 | war_room.tools.metric               | [TOOL RESULT] detect_anomalies() → 6 CRITICAL, 0 WARNING
+10:59:34 | war_room.agents.data_analyst        | [AGENT: Data Analyst Agent] → Invoking Tool: compare_to_baseline()
+10:59:34 | war_room.tools.metric               | [TOOL CALL] compare_to_baseline() invoked
+10:59:34 | war_room.tools.metric               | [TOOL RESULT] compare_to_baseline() → 10 metrics compared
+10:59:34 | war_room.agents                     | [AGENT: Data Analyst Agent] Calling LLM (model=gpt-4o)...
+10:59:42 | httpx                               | HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+10:59:42 | war_room.agents                     | [AGENT: Data Analyst Agent] LLM response received (1677 chars | tokens_used=2810)
+10:59:42 | war_room.agents.data_analyst        | [AGENT: Data Analyst Agent] ✓ Complete | Recommendation: ROLL_BACK | Confidence: 95
+10:59:42 | war_room.orchestrator               | [ORCHESTRATOR] ✓ Step 1 Complete
+
+10:59:42 | war_room.orchestrator               | [ORCHESTRATOR] ➤ Step 2: Dispatching Product Manager Agent
+10:59:42 | war_room.agents.pm                  | [AGENT: Product Manager Agent] ── Starting Analysis ──
+10:59:42 | war_room.agents                     | [AGENT: Product Manager Agent] Calling LLM (model=gpt-4o)...
+10:59:46 | httpx                               | HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+10:59:46 | war_room.agents                     | [AGENT: Product Manager Agent] LLM response received (1327 chars | tokens_used=1500)
+10:59:46 | war_room.agents.pm                  | [AGENT: Product Manager Agent] ✓ Complete | Recommendation: ROLL_BACK
+10:59:46 | war_room.orchestrator               | [ORCHESTRATOR] ✓ Step 2 Complete
+
+10:59:46 | war_room.orchestrator               | [ORCHESTRATOR] ➤ Step 3: Dispatching Marketing/Comms Agent
+10:59:46 | war_room.agents.marketing           | [AGENT: Marketing/Comms Agent] ── Starting Analysis ──
+10:59:46 | war_room.agents.marketing           | [AGENT: Marketing/Comms Agent] → Invoking Tool: summarize_sentiment()
+10:59:46 | war_room.tools.feedback             | [TOOL CALL] summarize_sentiment() invoked
+10:59:46 | war_room.tools.feedback             | [TOOL RESULT] summarize_sentiment() → Positive:6 Neutral:6 Negative:18 | Overall: NEGATIVE
+10:59:46 | war_room.agents.marketing           | [AGENT: Marketing/Comms Agent] → Invoking Tool: extract_themes()
+10:59:46 | war_room.tools.feedback             | [TOOL CALL] extract_themes() invoked
+10:59:46 | war_room.tools.feedback             | [TOOL RESULT] extract_themes() → Top theme: payment_failure | High-risk themes: 2
+10:59:46 | war_room.agents                     | [AGENT: Marketing/Comms Agent] Calling LLM (model=gpt-4o)...
+10:59:50 | httpx                               | HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+10:59:50 | war_room.agents                     | [AGENT: Marketing/Comms Agent] LLM response received (937 chars | tokens_used=1584)
+10:59:50 | war_room.agents.marketing           | [AGENT: Marketing/Comms Agent] ✓ Complete | Recommendation: PAUSE | Reputational Risk: HIGH
+10:59:50 | war_room.orchestrator               | [ORCHESTRATOR] ✓ Step 3 Complete
+
+10:59:50 | war_room.orchestrator               | [ORCHESTRATOR] ➤ Step 4: Dispatching SRE/Reliability Agent [BONUS]
+10:59:50 | war_room.agents.sre                 | [AGENT: SRE/Reliability Agent] ── Starting Analysis ──
+10:59:50 | war_room.agents.sre                 | [AGENT: SRE/Reliability Agent] → Invoking Tool: detect_anomalies()
+10:59:50 | war_room.tools.metric               | [TOOL CALL] detect_anomalies() invoked
+10:59:50 | war_room.tools.metric               | [TOOL RESULT] detect_anomalies() → 6 CRITICAL, 0 WARNING
+10:59:50 | war_room.agents                     | [AGENT: SRE/Reliability Agent] Calling LLM (model=gpt-4o)...
+10:59:54 | httpx                               | HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+10:59:54 | war_room.agents                     | [AGENT: SRE/Reliability Agent] LLM response received (1252 chars | tokens_used=1716)
+10:59:54 | war_room.agents.sre                 | [AGENT: SRE/Reliability Agent] ✓ Complete | Verdict: The system is in a critical state with multiple severe SLA b | Infra Risk: CRITICAL
+10:59:54 | war_room.orchestrator               | [ORCHESTRATOR] ✓ Step 4 Complete
+
+10:59:54 | war_room.orchestrator               | [ORCHESTRATOR] ➤ Step 5: Dispatching Risk/Critic Agent
+10:59:54 | war_room.agents.risk                | [AGENT: Risk/Critic Agent] ── Starting Analysis ──
+10:59:54 | war_room.agents                     | [AGENT: Risk/Critic Agent] Calling LLM (model=gpt-4o)...
+11:00:01 | httpx                               | HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+11:00:01 | war_room.agents                     | [AGENT: Risk/Critic Agent] LLM response received (2504 chars | tokens_used=1928)
+11:00:01 | war_room.agents.risk                | [AGENT: Risk/Critic Agent] ✓ Complete | Veto: True | Confidence: 40
+11:00:01 | war_room.orchestrator               | [ORCHESTRATOR] ✓ Step 5 Complete
+
+11:00:01 | war_room.orchestrator               | [ORCHESTRATOR] Agent Votes Collected:
+{
+    "data_analyst": "ROLL_BACK",
+    "product_manager": "ROLL_BACK",
+    "marketing_comms": "PAUSE",
+    "sre_reliability": "ROLL_BACK",
+    "risk_critic_veto": true
+}
+11:00:01 | war_room.orchestrator               | 
+[ORCHESTRATOR] ➤ Step 6: Synthesizing Final Decision...
+11:00:12 | httpx                               | HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+11:00:12 | war_room.orchestrator               | [ORCHESTRATOR] Synthesis LLM call complete (tokens=3648)
+11:00:12 | war_room.orchestrator               | 
+=================================================================
+11:00:12 | war_room.orchestrator               |   FINAL DECISION  : ROLL_BACK
+11:00:12 | war_room.orchestrator               |   CONFIDENCE      : 40% (LOW)
+11:00:12 | war_room.orchestrator               | =================================================================
+11:00:12 | war_room.orchestrator               |   WAR ROOM SESSION COMPLETE
+11:00:12 | war_room.orchestrator               | =================================================================
+
+11:00:12 | war_room.main                       | [MAIN] ✅ Output saved → output/final_decision_20260410_052929.json
+11:00:12 | war_room.main                       | [MAIN] ✅ Canonical   → output/final_decision.json
+11:00:12 | war_room.main                       | [MAIN] ✅ System complete. Exiting.

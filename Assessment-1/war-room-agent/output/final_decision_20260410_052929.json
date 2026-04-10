@@ -1,0 +1,131 @@
+{
+  "decision": "ROLL_BACK",
+  "rationale": {
+    "summary": "The decision to roll back is driven by critical failures in key metrics, severe SLA breaches, and high reputational and financial risks. The risk critic's veto and the majority of agent recommendations support this action.",
+    "key_drivers": [
+      "Significant degradation in activation, retention, and payment success rates.",
+      "Critical SLA breaches in crash rate, API latency, and support ticket volume.",
+      "High reputational risk due to negative user sentiment and legal issues.",
+      "Risk critic's veto due to severe user trust and financial stability risks."
+    ],
+    "metric_references": [
+      "crash_rate_pct: 4.8% — exceeds threshold of 3.0%",
+      "payment_success_rate: 0.79 — below threshold of 0.85"
+    ],
+    "feedback_summary": "User feedback is predominantly negative (60%), highlighting issues with payment failures, app crashes, and slow performance, leading to increased support tickets and potential churn."
+  },
+  "risk_register": [
+    {
+      "risk": "Continued high crash rate leading to user dissatisfaction and churn.",
+      "severity": "CRITICAL",
+      "mitigation": "Immediate rollback to previous stable version.",
+      "owner": "Engineering"
+    },
+    {
+      "risk": "Payment failures causing financial loss and legal issues.",
+      "severity": "CRITICAL",
+      "mitigation": "Rollback and conduct a thorough audit of payment systems.",
+      "owner": "Finance/Legal"
+    },
+    {
+      "risk": "Increased support ticket volume overwhelming support teams.",
+      "severity": "HIGH",
+      "mitigation": "Rollback and increase support staffing temporarily.",
+      "owner": "Customer Support"
+    },
+    {
+      "risk": "Negative user sentiment damaging brand reputation.",
+      "severity": "HIGH",
+      "mitigation": "Rollback and launch a targeted communication campaign to address issues.",
+      "owner": "Marketing/Comms"
+    },
+    {
+      "risk": "API latency affecting user experience and retention.",
+      "severity": "HIGH",
+      "mitigation": "Rollback and optimize API performance.",
+      "owner": "Engineering"
+    }
+  ],
+  "action_plan": [
+    {
+      "priority": 1,
+      "action": "Execute rollback to the previous stable version.",
+      "owner": "Engineering",
+      "deadline": "Within 24 hours",
+      "success_criteria": "System metrics return to baseline levels."
+    },
+    {
+      "priority": 2,
+      "action": "Conduct a thorough audit of payment systems.",
+      "owner": "Finance/Legal",
+      "deadline": "Within 48 hours",
+      "success_criteria": "Identification and resolution of payment issues."
+    },
+    {
+      "priority": 3,
+      "action": "Increase support staffing to handle ticket volume.",
+      "owner": "Customer Support",
+      "deadline": "Within 12 hours",
+      "success_criteria": "Reduction in support ticket backlog."
+    },
+    {
+      "priority": 4,
+      "action": "Launch a communication campaign to address user concerns.",
+      "owner": "Marketing/Comms",
+      "deadline": "Within 24 hours",
+      "success_criteria": "Improved user sentiment and reduced negative feedback."
+    }
+  ],
+  "communication_plan": {
+    "internal": {
+      "audience": "All staff",
+      "message": "We are rolling back to the previous stable version due to critical issues. Teams are working on resolving these swiftly.",
+      "channel": "Email and Slack",
+      "timing": "Immediately"
+    },
+    "external": {
+      "audience": "All users",
+      "message": "We are addressing recent issues with a rollback to ensure stability. We apologize for any inconvenience and appreciate your patience.",
+      "channel": "Email and social media",
+      "timing": "Within 24 hours"
+    }
+  },
+  "confidence_score": {
+    "score": 40,
+    "rating": "LOW",
+    "what_would_increase_confidence": [
+      "Detailed root cause analysis of the crash rate and payment failures.",
+      "Evidence of successful mitigation strategies for identified issues.",
+      "Improved data accuracy and validation of current metrics."
+    ]
+  },
+  "agent_votes": {
+    "data_analyst": "ROLL_BACK",
+    "product_manager": "ROLL_BACK",
+    "marketing_comms": "PAUSE",
+    "sre_reliability": "ROLL_BACK",
+    "risk_critic_veto": true
+  },
+  "metadata": {
+    "session_timestamp": "2026-04-10T05:30:12.526219+00:00",
+    "feature": "SmartPay v2.0 - Unified Checkout",
+    "launch_date": "2026-03-29",
+    "report_date": "2026-04-08",
+    "days_since_launch": 10,
+    "model_used": "gpt-4o",
+    "agents_consulted": [
+      "data_analyst",
+      "product_manager",
+      "marketing_comms",
+      "sre_reliability",
+      "risk_critic"
+    ],
+    "tools_invoked": [
+      "aggregate_metrics",
+      "detect_anomalies",
+      "compare_to_baseline",
+      "summarize_sentiment",
+      "extract_themes"
+    ]
+  }
+}

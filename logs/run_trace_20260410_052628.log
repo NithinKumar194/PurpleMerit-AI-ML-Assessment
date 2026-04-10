@@ -1,0 +1,7 @@
+10:56:28 | war_room.main                       | ✅ OPENAI_API_KEY loaded from environment
+10:56:33 | war_room.main                       | =================================================================
+10:56:33 | war_room.main                       |   WAR ROOM MULTI-AGENT SYSTEM — STARTING
+10:56:33 | war_room.main                       |   Log File: logs/run_trace_20260410_052628.log
+10:56:33 | war_room.main                       | =================================================================
+10:56:33 | war_room.main                       | [MAIN] Loading input data files...
+10:56:33 | war_room.main                       | ❌ Missing: data\metrics.json

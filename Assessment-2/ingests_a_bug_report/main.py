@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 from agents import AgentOrchestrator
 
 def load_file(path):
-    with open(path, 'r') as f:
+    with open(path, 'r', encoding='utf-8') as f:
         return f.read()
 
 def run_script_tool(script_content: str, script_path: str = "repro.py") -> str:

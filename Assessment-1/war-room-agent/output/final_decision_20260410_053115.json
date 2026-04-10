@@ -1,0 +1,118 @@
+{
+  "decision": "ROLL_BACK",
+  "rationale": {
+    "summary": "The decision to ROLL_BACK is driven by critical failures in key performance metrics, high reputational and legal risks, and the Risk Critic's veto. Immediate action is required to prevent further user attrition and financial losses.",
+    "key_drivers": [
+      "Significant degradation in activation, retention, and payment success rates.",
+      "High crash rate and API latency impacting user experience.",
+      "Increased support ticket volume indicating widespread user issues.",
+      "High reputational and legal risks due to payment failures and double charges."
+    ],
+    "metric_references": [
+      "crash_rate_pct: 4.8 — critical breach, baseline 0.5",
+      "api_latency_p95_ms: 580 — critical breach, baseline 200"
+    ],
+    "feedback_summary": "User feedback is predominantly negative (60%), highlighting issues with payment failures, app crashes, and slow performance, leading to frustration and potential loss of trust."
+  },
+  "risk_register": [
+    {
+      "risk": "Continued high crash rates leading to user attrition and negative app reviews.",
+      "severity": "CRITICAL",
+      "mitigation": "Immediate technical investigation and patch deployment.",
+      "owner": "Engineering Team"
+    },
+    {
+      "risk": "Payment failures resulting in revenue loss and legal liabilities.",
+      "severity": "CRITICAL",
+      "mitigation": "Collaborate with payment gateway providers to resolve issues and implement compensatory measures for affected users.",
+      "owner": "Finance and Tech Teams"
+    },
+    {
+      "risk": "Increased support ticket volume overwhelming customer service resources.",
+      "severity": "HIGH",
+      "mitigation": "Scale up support team temporarily and improve self-service resources.",
+      "owner": "Customer Support Team"
+    },
+    {
+      "risk": "Negative user sentiment impacting brand reputation.",
+      "severity": "HIGH",
+      "mitigation": "Execute a comprehensive communication strategy to address user concerns and provide updates.",
+      "owner": "Marketing/Comms Team"
+    }
+  ],
+  "action_plan": [
+    {
+      "priority": 1,
+      "action": "Roll back to the previous stable release version.",
+      "owner": "Engineering Team",
+      "deadline": "Within 24 hours",
+      "success_criteria": "Previous version is live and stable with no critical issues."
+    },
+    {
+      "priority": 2,
+      "action": "Conduct a root cause analysis of the technical issues causing high crash rates and payment failures.",
+      "owner": "Engineering and Tech Teams",
+      "deadline": "Within 48 hours",
+      "success_criteria": "Comprehensive report identifying root causes and proposed solutions."
+    },
+    {
+      "priority": 3,
+      "action": "Enhance support response times and scale up support team temporarily.",
+      "owner": "Customer Support Team",
+      "deadline": "Within 24 hours",
+      "success_criteria": "Reduced response times and increased customer satisfaction."
+    }
+  ],
+  "communication_plan": {
+    "internal": {
+      "audience": "All staff",
+      "message": "We are rolling back to the previous version due to critical issues in the current release. Teams are working on resolving these issues urgently.",
+      "channel": "Email and Slack",
+      "timing": "Immediately"
+    },
+    "external": {
+      "audience": "All users",
+      "message": "We are addressing recent issues with the app, including payment failures and crashes. We are rolling back to a stable version and appreciate your patience.",
+      "channel": "Email and in-app notification",
+      "timing": "Within 24 hours"
+    }
+  },
+  "confidence_score": {
+    "score": 40,
+    "rating": "LOW",
+    "what_would_increase_confidence": [
+      "Detailed root cause analysis of the technical issues causing high crash rates and payment failures.",
+      "Evidence of successful mitigation strategies in place for critical issues.",
+      "User feedback post-communication strategy implementation to assess sentiment improvement."
+    ]
+  },
+  "agent_votes": {
+    "data_analyst": "ROLL_BACK",
+    "product_manager": "ROLL_BACK",
+    "marketing_comms": "PAUSE",
+    "sre_reliability": "ROLL_BACK",
+    "risk_critic_veto": true
+  },
+  "metadata": {
+    "session_timestamp": "2026-04-10T05:31:54.317154+00:00",
+    "feature": "SmartPay v2.0 - Unified Checkout",
+    "launch_date": "2026-03-29",
+    "report_date": "2026-04-08",
+    "days_since_launch": 10,
+    "model_used": "gpt-4o",
+    "agents_consulted": [
+      "data_analyst",
+      "product_manager",
+      "marketing_comms",
+      "sre_reliability",
+      "risk_critic"
+    ],
+    "tools_invoked": [
+      "aggregate_metrics",
+      "detect_anomalies",
+      "compare_to_baseline",
+      "summarize_sentiment",
+      "extract_themes"
+    ]
+  }
+}

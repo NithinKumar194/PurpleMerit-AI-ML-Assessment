@@ -1,7 +1,17 @@
-from mini_repo.app import calculate_discounted_prices
+import requests
 
-# Test input that will trigger the ZeroDivisionError
-cart_items = [{'name': 'Apple', 'price': 100, 'discount_percent': 1.0}]  # 100% discount 
+# This script triggers the error in the checkout function by sending a product without a price.
 
-# This should raise ZeroDivisionError
-print(calculate_discounted_prices(cart_items))
+url = 'http://localhost:5000/checkout'
+
+# Creating a cart with a product that is missing the 'price' field
+cart = [
+    {"id": 1, "qty": 2},  # Widget A with price
+    {"id": 3, "qty": 1},  # Broken Item without price
+]
+
+# Making a POST request to the checkout endpoint
+response = requests.post(url, json={"cart": cart})
+
+print(response.status_code)
+print(response.json())
