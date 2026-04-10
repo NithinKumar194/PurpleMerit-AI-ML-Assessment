@@ -36,8 +36,8 @@ Agent   Agent        Agent         Agent        /Critic
 | Agent | Role |
 |---|---|
 | Triage Agent | Extracts symptoms, expected vs actual behavior, prioritizes hypotheses |
-| Log Analyst Agent | Searches logs for stack traces, error signatures, anomalies |
-| Reproduction Agent | Generates and runs minimal reproduction script (repro.py) |
+| Log Analyst Agent | Searches logs for stack traces, error signatures, red herrings |
+| Reproduction Agent | Generates and runs a standalone minimal repro script (no server required) |
 | Fix Planner Agent | Proposes root-cause hypothesis and patch plan |
 | Reviewer/Critic Agent | Challenges assumptions, verifies fix plan, suggests edge cases |
 
@@ -47,9 +47,9 @@ Agent   Agent        Agent         Agent        /Critic
 **Option A — Mini Repo** (as recommended by assessment)
 
 The `mini_repo/` folder contains:
-- `app.py` — Flask app with an intentionally introduced bug (KeyError on missing 'price' field)
+- `app.py` — Python module with an intentionally introduced bug: `ZeroDivisionError` in `calculate_discounted_prices()` when `discount_percent = 1.0`
 - `bug_report.md` — Full bug report with expected vs actual behavior
-- `logs.txt` — Application logs with stack traces and red herring lines
+- `logs.txt` — Application logs with stack trace and red-herring lines
 
 ---
 
@@ -57,7 +57,7 @@ The `mini_repo/` folder contains:
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/NithinKumar194/PurpleMerit-AI-ML-Assessment/tree/main/Assessment-2/ingests_a_bug_report
+git clone https://github.com/NithinKumar194/PurpleMerit-AI-ML-Assessment
 cd PurpleMerit-AI-ML-Assessment/Assessment-2/ingests_a_bug_report
 ```
 
@@ -93,13 +93,27 @@ python main.py
 
 ```
 Loading inputs (bug report, logs, codebase)...
-Running Triage Agent...
-Running Log Analyst Agent...
-Running Reproduction Agent...
-Executing repro.py...
-Running Fix Planner Agent...
-Running Reviewer Agent...
-resolution_output.json written.
+
+--- Starting Agent Orchestration ---
+
+[Triage Agent] Analyzing bug report...
+ -> Triage severity assessment: High
+
+[Log Analyst Agent] Parsing logs and correlating with triage data...
+ -> Log analysis flagged surface: mini_repo/app.py, line 12, calculate_discounted_prices
+
+[Reproduction Agent] Writing minimal repro script...
+[*] Tool Execution: Running generated script (repro.py)...
+ -> Reproduction execution successful: Triggered ZeroDivisionError as expected.
+
+[Fix Planner Agent] Proposing root cause and patch...
+ -> Root Cause Hypothesis: formula `price / (1 - discount)` should be `price * (1 - discount)` (Confidence: High)
+
+[Reviewer Agent] Critiquing fix plan...
+ -> Review approved: True
+
+Final structured report generated at resolution_output.json.
+✅  Fix plan APPROVED by Reviewer. Ready for implementation.
 ```
 
 ---
@@ -116,42 +130,43 @@ resolution_output.json written.
 
 | File | Description |
 |---|---|
-| `repro.py` | Minimal runnable script that reproduces the bug consistently |
+| `repro.py` | Minimal standalone script that reproduces the bug (no server needed) |
 | `resolution_output.json` | Full structured output — root cause, patch plan, validation |
 
 ---
 
-## Structured Output (resolution_output.json) Contains
+## Structured Output (`resolution_output.json`) Contains
 
-- Bug summary (symptoms, scope, severity)
-- Evidence (log lines, stack trace excerpts)
-- Repro steps + repro artifact path
-- Root-cause hypothesis (with confidence score)
-- Patch plan (files impacted, approach, risks)
-- Validation plan (tests to add, regression checks)
-- Open questions / missing info
+- `bug_summary` — symptoms, scope, severity
+- `evidence` — log lines, stack trace excerpts, red herrings identified
+- `repro_steps_and_artifact` — how to run repro.py + expected failing output
+- `root_cause_hypothesis` — with confidence score
+- `patch_plan` — files impacted, approach, risks
+- `validation_plan` — tests to add, regression checks
+- `open_questions` — missing info / follow-up items
+- `agent_traces_and_feedback` — reviewer approval + critique
 
 ---
 
 ## Trace Logs
 
-All agent decisions and tool calls are printed to console during execution.
-Each agent step is clearly labeled:
+All agent decisions and tool calls are printed to the console during execution.
+Each step is clearly labelled:
 ```
-[TRIAGE AGENT] Starting...
-[LOG ANALYST AGENT] Searching logs...
-[REPRODUCTION AGENT] Generating repro script...
-[TOOL] Executing repro.py via subprocess...
-[FIX PLANNER AGENT] Proposing patch...
-[REVIEWER AGENT] Critiquing plan...
+[Triage Agent] Analyzing bug report...
+[Log Analyst Agent] Parsing logs and correlating with triage data...
+[Reproduction Agent] Writing minimal repro script...
+[*] Tool Execution: Running generated script (repro.py)...
+[Fix Planner Agent] Proposing root cause and patch...
+[Reviewer Agent] Critiquing fix plan...
 ```
+Console output = the trace. No separate log file is written.
 
 ---
 
 ## Tech Stack
 
-- Python 3.10+
-- OpenAI GPT-4o
-- Flask (mini_repo app)
+- Python 3.9+
+- OpenAI GPT-4o-mini (structured outputs via Pydantic)
 - python-dotenv
-- subprocess (tool execution)
+- subprocess (tool execution for repro script)

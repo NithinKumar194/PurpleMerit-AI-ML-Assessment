@@ -1,16 +1,26 @@
-import requests
+"""
+Minimal reproduction script for:
+  BUG: ZeroDivisionError when discount_percent = 1.0
+  FILE: mini_repo/app.py :: calculate_discounted_prices()
 
-# Testing endpoint that triggers the KeyError
-url = 'http://127.0.0.1:5000/checkout'
+Run: python repro.py
+Expected: exits with non-zero code and prints ZeroDivisionError
+"""
+import sys
+import traceback
+from mini_repo.app import calculate_discounted_prices
 
-# Sending a cart with an item that is missing the 'price' field
-cart_data = {
-    'cart': [
-        {'id': 1, 'qty': 2},  # Widget A
-        {'id': 2, 'qty': 1},  # Widget B
-        {'id': 3, 'qty': 1}   # Broken Item (missing 'price')
-    ]
-}
+cart = [
+    {"name": "Laptop",          "price": 1500, "discount_percent": 0.2},
+    {"name": "Promotional Mug", "price": 15,   "discount_percent": 1.0},  # <-- triggers bug
+]
 
-response = requests.post(url, json=cart_data)
-print(response.status_code, response.text)  # This should trigger the error
+print("BUG REPRODUCTION: calling calculate_discounted_prices() with 100% discount item...")
+try:
+    result = calculate_discounted_prices(cart)
+    print(f"UNEXPECTED SUCCESS — no error raised. Result: {result}")
+    sys.exit(0)
+except ZeroDivisionError as e:
+    print(f"BUG REPRODUCED ✓  ZeroDivisionError: {e}")
+    traceback.print_exc()
+    sys.exit(1)

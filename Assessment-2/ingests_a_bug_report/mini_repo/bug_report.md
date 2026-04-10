@@ -1,30 +1,25 @@
-# Bug Report
-
-## Title
-User checkout fails with KeyError on missing 'price' field
+# Bug Report: Application crashes on 100% discount items
 
 ## Description
-When a user attempts to checkout with an item that has no 'price' key in the
-product dictionary, the application throws an unhandled KeyError and crashes
-instead of returning a proper error response.
+When processing a cart that contains an item with a 100% discount
+(`discount_percent = 1.0`), the application crashes completely.
+This is currently blocking our promotional giveaway campaign.
 
 ## Expected Behavior
-The checkout endpoint should return HTTP 400 with a clear error message:
-"Invalid product data: missing required field 'price'"
+The item's final price should be calculated as `0.0`, and the rest of the
+cart should process normally without any errors.
 
 ## Actual Behavior
-The server crashes with:
-KeyError: 'price'
-500 Internal Server Error returned to the client
+The application raises a `ZeroDivisionError: float division by zero` and
+aborts the entire cart processing task.
 
 ## Environment
-- Language: Python 3.10
-- Framework: Flask 2.3.2
-- OS: Ubuntu 22.04 / Windows 10
-- Version: app v1.2.0 (deployed 2026-04-01)
+- Python 3.9+
+- OS: Ubuntu 22.04
 
 ## Reproduction Hints
-- Send POST /checkout with a product dict missing the 'price' key
-- Happens consistently when price field is absent
-- Does not happen when price is present (even if 0)
-- First reported after v1.2.0 deploy on 2026-04-01
+Pass a cart item with `discount_percent = 1.0` to `calculate_discounted_prices()`.
+Example:
+```python
+calculate_discounted_prices([{"name": "Mug", "price": 15, "discount_percent": 1.0}])
+```
